@@ -3,6 +3,7 @@ import { getRepository, getCustomRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import User from '../models/User';
+import AppError from '../errors/AppError';
 
 interface Request {
   provider_id: string;
@@ -18,7 +19,7 @@ class CreateAppointmentService {
       appointmentDate,
     );
     if (findAppointmentInSameDate) {
-      throw Error('This appointment is already booked');
+      throw new AppError('This appointment is already booked');
     }
 
     // Checks if provider exists
@@ -27,7 +28,7 @@ class CreateAppointmentService {
       where: { id: provider_id },
     });
     if (!provider) {
-      throw Error('This provider does not exist');
+      throw new AppError('This provider does not exist');
     }
 
     // Create a new appointment
