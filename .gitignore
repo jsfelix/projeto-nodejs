@@ -109,3 +109,5 @@ dist
 
 /tmp/*
 !tmp/.gitkeep
+
+.DS_Store
